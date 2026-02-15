@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">card<span>.</span>lab</div>
+
+  <!-- Hook: id="openModal" → open overlay -->
+  <button class="add-btn" id="openModal">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round">
+      <line x1="12" y1="5" x2="12" y2="19"/>
+      <line x1="5" y1="12" x2="19" y2="12"/>
+    </svg>
+    Add Product
+  </button>
+</header>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- FILTERS -->
+  <div class="filters">
+
+    <!-- Hook: id="searchInput" → filter by name -->
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Search products…">
+    </div>
+
+    <!-- Hook: id="categoryFilter" → filter by category -->
+    <select class="filter-select" id="categoryFilter">
+      <option value="">All Categories</option>
+      <option value="clothing">Clothing</option>
+      <option value="accessories">Accessories</option>
+      <option value="footwear">Footwear</option>
+      <option value="home">Home</option>
+    </select>
+
+    <!-- Hook: id="sortFilter" → sort cards -->
+    <select class="filter-select" id="sortFilter">
+      <option value="">Sort by</option>
+      <option value="price-asc">Price ↑</option>
+      <option value="price-desc">Price ↓</option>
+      <option value="rating">Top Rated</option>
+      <option value="newest">Newest</option>
+    </select>
+
+    <!-- Hook: id="countChip" → update dynamically -->
+    <span class="chip" id="countChip">4 products</span>
+  </div>
+
+  <!-- GRID — Hook: id="grid" → JS appends cards here -->
+  <div class="grid" id="grid">
+
+    <!-- SAMPLE CARD 1 -->
+    <div class="card" data-category="clothing">
+      <div class="card-img tone-a">
+        <span>👕</span>
+      </div>
+      <span class="card-tag">Clothing</span>
+      <div class="card-body">
+        <div class="card-name">Linen Summer Shirt</div>
+        <div class="card-desc">Breathable 100% linen, perfect for warm days. Relaxed fit with a clean collar.</div>
+        <div class="card-foot">
+          <span class="card-price">$68</span>
+          <span class="card-rating">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            4.8
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAMPLE CARD 2 -->
+    <div class="card" data-category="accessories">
+      <div class="card-img tone-b">
+        <span>🎒</span>
+      </div>
+      <span class="card-tag">Accessories</span>
+      <div class="card-body">
+        <div class="card-name">Canvas Daypack</div>
+        <div class="card-desc">Lightweight canvas bag with padded straps and a hidden back pocket.</div>
+        <div class="card-foot">
+          <span class="card-price">$120</span>
+          <span class="card-rating">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            4.6
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAMPLE CARD 3 -->
+    <div class="card" data-category="footwear">
+      <div class="card-img tone-c">
+        <span>👟</span>
+      </div>
+      <span class="card-tag">Footwear</span>
+      <div class="card-body">
+        <div class="card-name">Minimal Sneaker</div>
+        <div class="card-desc">Clean silhouette with a cushioned sole and premium leather upper.</div>
+        <div class="card-foot">
+          <span class="card-price">$145</span>
+          <span class="card-rating">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            4.9
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAMPLE CARD 4 -->
+    <div class="card" data-category="home">
+      <div class="card-img tone-d">
+        <span>🕯️</span>
+      </div>
+      <span class="card-tag">Home</span>
+      <div class="card-body">
+        <div class="card-name">Cedar Candle</div>
+        <div class="card-desc">Hand-poured soy wax with a warm cedar and amber scent. 40hr burn time.</div>
+        <div class="card-foot">
+          <span class="card-price">$38</span>
+          <span class="card-rating">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            4.7
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty state — Hook: id="empty" → JS shows when 0 results -->
+    <div class="empty" id="empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <span style="font-weight:500;color:var(--sub)">No products found</span>
+      <span>Try a different search or filter</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     MODAL
+════════════════════════════════════ -->
+<!-- Hook: id="overlay" → add .open to show, click outside to close -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+
+    <div class="modal-head">
+      <span class="modal-title">New Product</span>
+      <!-- Hook: id="closeModal" → remove .open -->
+      <button class="close" id="closeModal">✕</button>
+    </div>
+
+    <div class="modal-body">
+
+      <div class="field">
+        <label>Product Name</label>
+        <!-- id="inputName" -->
+        <input type="text" id="inputName" placeholder="e.g. Wool Knit Sweater">
+      </div>
+
+      <div class="field">
+        <label>Description</label>
+        <!-- id="inputDesc" -->
+        <textarea id="inputDesc" placeholder="Short description of the product…"></textarea>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>Price ($)</label>
+          <!-- id="inputPrice" -->
+          <input type="number" id="inputPrice" placeholder="0.00" min="0">
+        </div>
+        <div class="field">
+          <label>Rating</label>
+          <!-- id="inputRating" -->
+          <input type="number" id="inputRating" placeholder="4.5" min="1" max="5" step="0.1">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>Category</label>
+          <!-- id="inputCategory" -->
+          <select id="inputCategory">
+            <option value="clothing">Clothing</option>
+            <option value="accessories">Accessories</option>
+            <option value="footwear">Footwear</option>
+            <option value="home">Home</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Emoji / Icon</label>
+          <!-- id="inputEmoji" -->
+          <input type="text" id="inputEmoji" placeholder="👕" maxlength="2">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="modal-foot">
+      <!-- Hook: id="cancelBtn" → close modal -->
+      <button class="btn-cancel" id="cancelBtn">Cancel</button>
+      <!-- Hook: id="generateBtn" → read inputs, create card, close modal -->
+      <button class="btn-generate" id="generateBtn">Generate Card</button>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
