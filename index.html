@@ -160,7 +160,7 @@
     <div class="modal-head">
       <span class="modal-title">New Product</span>
       <!-- Hook: id="closeModal" → remove .open -->
-      <button class="close" id="closeModal">✕</button>
+      <button class="close close-modal" id="closeModal">✕</button>
     </div>
 
     <div class="modal-body">
@@ -212,12 +212,14 @@
 
     <div class="modal-foot">
       <!-- Hook: id="cancelBtn" → close modal -->
-      <button class="btn-cancel" id="cancelBtn">Cancel</button>
+      <button class="btn-cancel close-modal" id="cancelBtn">Cancel</button>
       <!-- Hook: id="generateBtn" → read inputs, create card, close modal -->
       <button class="btn-generate" id="generateBtn">Generate Card</button>
     </div>
 
   </div>
 </div>
+
+<script src="script.js"></script>
 </body>
 </html>
