@@ -3,6 +3,10 @@ const AddProductModal = document.getElementById('overlay');
 const CloseProductModal = document.querySelectorAll('.close-modal');
 const generateCardBtn = document.getElementById('generateBtn')
 
+const cardCouter = document.getElementById('counter')
+let counter = 0
+
+
 // opening Modal 
 AddProductButton.addEventListener('click', (e) => {
     e.preventDefault();
@@ -33,6 +37,8 @@ function CardGenerator() {
     const prRating = document.getElementById('inputRating').value;
     const prCategory = document.getElementById('inputCategory').value;
     const prEmoji = document.getElementById('inputEmoji').value;
+    const clear = document.querySelectorAll('.cardInput');
+
 
     productCards.push({
         name: prName,
@@ -65,5 +71,17 @@ function CardGenerator() {
             </div>
         </div>
     `).join('');
+
+    AddProductModal.classList.add('close')
+    AddProductModal.classList.remove('open')
+
+    clear.forEach((elem) => {
+        elem.value = ""
+    })
+
+    cardCouter.innerText = ++counter
+    localStorage.setItem("cards", cardGrid)
+
 }
 generateCardBtn.addEventListener('click', CardGenerator)
+
