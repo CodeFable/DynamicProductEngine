@@ -1,55 +1,64 @@
+// ELEMENT SELECTORS
+
 const AddProductButton = document.getElementById('openModal');
 const AddProductModal = document.getElementById('overlay');
 const CloseProductModal = document.querySelectorAll('.close-modal');
-const generateCardBtn = document.getElementById('generateBtn')
+const generateCardBtn = document.getElementById('generateBtn');
+const cardGrid = document.getElementById('grid');
+const cardCouter = document.getElementById('counter');
 
-const cardCouter = document.getElementById('counter')
-let counter = 0
+
+// GLOBAL STATE (Source of Truth)
+
+let productCards = [];
+let counter = 0;
 
 
-// opening Modal 
+// MODAL OPEN
+
 AddProductButton.addEventListener('click', (e) => {
     e.preventDefault();
-    AddProductModal.classList.add('open')
-    AddProductModal.classList.remove('close')
-})
-
-// Closing Modal
-function closeOverlay() {
-    AddProductModal.classList.add('close')
-    AddProductModal.classList.remove('open')
-}
-CloseProductModal.forEach((button) => {
-    button.addEventListener('click', closeOverlay)
+    AddProductModal.classList.add('open');
+    AddProductModal.classList.remove('close');
 });
 
 
-// Cards Grid
-const cardGrid = document.getElementById('grid')
+// MODAL CLOSE
 
-const productCards = [];
-//  Genera Cards 
-function CardGenerator() {
+function closeOverlay() {
+    AddProductModal.classList.add('close');
+    AddProductModal.classList.remove('open');
+}
 
-    const prName = document.getElementById('inputName').value;
-    const prPrice = document.getElementById('inputPrice').value;
-    const prDesc = document.getElementById('inputDesc').value;
-    const prRating = document.getElementById('inputRating').value;
-    const prCategory = document.getElementById('inputCategory').value;
-    const prEmoji = document.getElementById('inputEmoji').value;
-    const clear = document.querySelectorAll('.cardInput');
+CloseProductModal.forEach((button) => {
+    button.addEventListener('click', closeOverlay);
+});
 
 
-    productCards.push({
-        name: prName,
-        price: prPrice,
-        description: prDesc,
-        rating: prRating,
-        category: prCategory,
-        emoji: prEmoji
-    });
+// SAVE TO LOCAL STORAGE
 
-    // Map and generate cards
+function saveToStorage() {
+    localStorage.setItem("cards", JSON.stringify(productCards));
+}
+
+
+// LOAD FROM LOCAL STORAGE
+
+function loadCards() {
+    const storedCards = localStorage.getItem("cards");
+
+    if (storedCards) {
+        productCards = JSON.parse(storedCards);
+        counter = productCards.length;
+        cardCouter.innerText = counter;
+        renderCards();
+    }
+}
+
+
+// RENDER CARDS (UI Generator)
+
+function renderCards() {
     cardGrid.innerHTML = productCards.map(product => `
         <div class="card" data-category="${product.category}">
             <div class="card-img tone-a">
@@ -71,17 +80,44 @@ function CardGenerator() {
             </div>
         </div>
     `).join('');
-
-    AddProductModal.classList.add('close')
-    AddProductModal.classList.remove('open')
-
-    clear.forEach((elem) => {
-        elem.value = ""
-    })
-
-    cardCouter.innerText = ++counter
-    localStorage.setItem("cards", cardGrid)
-
 }
-generateCardBtn.addEventListener('click', CardGenerator)
 
+
+// CARD GENERATOR
+
+function CardGenerator() {
+
+    const prName = document.getElementById('inputName').value;
+    const prPrice = document.getElementById('inputPrice').value;
+    const prDesc = document.getElementById('inputDesc').value;
+    const prRating = document.getElementById('inputRating').value;
+    const prCategory = document.getElementById('inputCategory').value;
+    const prEmoji = document.getElementById('inputEmoji').value;
+    const clearInputs = document.querySelectorAll('.cardInput');
+
+    productCards.push({
+        name: prName,
+        price: prPrice,
+        description: prDesc,
+        rating: prRating,
+        category: prCategory,
+        emoji: prEmoji
+    });
+
+    renderCards();
+    saveToStorage();
+
+    closeOverlay();
+
+    clearInputs.forEach(elem => elem.value = "");
+
+    counter = productCards.length;
+    cardCouter.innerText = counter;
+}
+
+generateCardBtn.addEventListener('click', CardGenerator);
+
+
+// INITIAL LOAD
+
+document.addEventListener("DOMContentLoaded", loadCards);
